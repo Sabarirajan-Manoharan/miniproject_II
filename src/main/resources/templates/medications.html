@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Medication</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+        }
+        table{
+            border: 1px solid;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: beige;
+        }
+        td{
+            padding: 1em;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body>
+<div th:replace="navbar :: header"></div><br>
+<div style="float: right;"><a href="/logout">Logout</a></div>
+<h1>Medications</h1>
+<div style="display:none;">
+    <h5><p>Your ID: <span th:text="${pid}"></span></p></h5>
+</div>
+
+<a th:href="@{/medications?patientId={id}(id=${pid})}">Your Medicine's</a><br><br>
+
+<!-- Add Medication Form -->
+<h2>Add Medication</h2>
+<div style="float: left;">
+    <h1>Welcome, <span th:text="${username}"></span>!</h1>
+</div>
+<label for="patient">Enter Patient ID:</label>
+<input type="text" id="patient" name="patientId" th:value="${pid}" readonly><br>
+
+<form action="/medications/add" method="post">
+<!--    <input type="hidden" name="patientId" th:value="${patientId}">-->
+    <label for="name">Medication Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="dosage">Dosage:</label>
+    <input type="text" id="dosage" name="dosage" required><br>
+    <label for="frequency">Frequency:</label>
+    <input type="text" id="frequency" name="frequency" required><br>
+
+    <button type="submit">Add Medication</button>
+</form>
+
+<!-- List Medications -->
+<h2>Current Medications</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Dosage</th>
+        <th>Frequency</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="medication : ${medications}">
+        <td th:text="${medication.medicationName}">Name</td>
+        <td th:text="${medication.dosage}">Dosage</td>
+        <td th:text="${medication.frequency}">Frequency</td>
+        <td>
+            <!-- Edit Medication Form -->
+            <form action="/medications/edit" method="post" style="display: inline;">
+                <input type="hidden" name="medicationId" th:value="${medication.id}">
+                <input type="hidden" name="patientId" th:value="${patientId}">
+                <input type="text" name="name" th:value="${medication.medicationName}" required>
+                <input type="text" name="dosage" th:value="${medication.dosage}" required>
+                <input type="text" name="frequency" th:value="${medication.frequency}" required>
+                <button type="submit">Update</button>
+            </form>
+            <!-- Delete Medication Form -->
+            <form action="/medications/delete" method="post" style="display: inline;">
+                <input type="hidden" name="medicationId" th:value="${medication.id}">
+                <input type="hidden" name="patientId" th:value="${patientId}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

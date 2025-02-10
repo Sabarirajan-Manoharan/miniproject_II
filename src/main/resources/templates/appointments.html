@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+        }
+        table{
+            border: 1px solid;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: beige;
+        }
+        td{
+            padding: 1em;
+        }
+
+    </style>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body>
+<div th:replace="navbar :: header"></div><br>
+<div style="float: right;"><a href="/logout">Logout</a></div>
+<h1>Appointments</h1>
+<div style="float: left;">
+    <h1>Welcome, <span th:text="${username}"></span>!</h1>
+</div>
+<div style="display:none;">
+    <h5><p>Your ID: <span th:text="${pid}"></span></p></h5>
+</div>
+
+<a th:href="@{/appointments?patientId={id}(id=${pid})}">Your Appointment's</a><br><br>
+
+<!--<label for="passengerId">Passenger ID:</label>-->
+<!--<input type="number" id="passengerId" th:value="${pid}" readonly /><br />-->
+<label for="patient"> Patient ID:</label>
+<input type="number" id="patient" name="patientId" th:value="${pid}" readonly><br>
+
+<form action="/appointments/book" method="post">
+    <label for="doctor">Select Doctor:</label>
+    <select name="doctorId" id="doctor" required>
+        <option th:each="doctor : ${doctors}"
+                th:value="${doctor.id}"
+                th:text="${doctor.name}">Doctor Name</option>
+    </select><br>
+
+<!--    <label for="patient">Enter Patient ID:</label>-->
+<!--    <input type="text" id="patient" name="patientId" required><br>-->
+
+    <label for="appointmentDate">Appointment Date:</label>
+    <input type="datetime-local" id="appointmentDate" name="appointmentDate" required><br>
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+<h2>Existing Appointments</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Doctor</th>
+        <th>Patient</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.doctor.name}">Doctor Name</td>
+        <td th:text="${appointment.patient.name}">Patient Name</td>
+        <td th:text="${appointment.appointmentDate}">Appointment Date</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

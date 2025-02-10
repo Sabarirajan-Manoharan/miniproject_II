@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+        }
+        table{
+            border: 1px solid;
+            padding: 5em;
+            background-color: beige;
+        }
+        td{
+            padding: 1em;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+</head>
+<body>
+<div th:replace="navbar :: header"></div><br>
+<div style="float: right;"><a href="/logout">Logout</a></div>
+<h2>Patient Schedule & Medicine Maintanence:</h2>
+<h1>Welcome, <span th:text="${username}"></span>!</h1>
+<h6><p>Your ID: <span th:text="${id}"></span></p></h6>
+<br>
+<hr>
+
+</body>
+
+</html>

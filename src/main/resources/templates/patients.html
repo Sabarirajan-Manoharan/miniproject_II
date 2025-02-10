@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient List</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+        }
+        table{
+            border: 1px solid;
+            padding: 5em;
+            background-color: beige;
+        }
+        td{
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+
+<hr>
+<br>
+<h1>Registered User List!!</h1>
+<br>
+<hr>
+<a th:href="@{/logout}">Logout</a>
+<table>
+
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Medical History</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "patient : ${patientDtos}">
+        <td th:text = "${patient.name}"></td>
+        <td th:text = "${patient.email}"></td>
+        <td th:text = "${patient.medicalHistory}"></td>
+    </tr>
+    <tr>
+        <td colspan="2"><span><a th:href="@{/register}">Register / SignUp here</a></span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+
+</html>
